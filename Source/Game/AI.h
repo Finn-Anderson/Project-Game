@@ -24,6 +24,8 @@ public:
 
 	class APly* Player;
 
+	class AAIController* AIController;
+
 	virtual void Tick(float DeltaTime) override;
 
 public:
@@ -33,9 +35,6 @@ public:
 
 	UPROPERTY()
 		FTimerHandle ClearTimer;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
-		TSubclassOf<class AXPOrb> XPOrb;
 
 	void Death(FVector DeathInstigatorLocation, FName Bone);
 

@@ -38,17 +38,17 @@ void AItem::Unfocused() {
 	MeshComponent->SetRenderCustomDepth(false);
 }
 
-void AWeapon::Primary(APly* Player)
+void AItem::Primary(APly* Player)
 {
 
 }
 
-void AWeapon::Secondary(APly* Player)
+void AItem::Secondary(APly* Player)
 {
 
 }
 
-void AWeapon::Reload(APly* Player)
+void AItem::Reload(APly* Player)
 {
 
 }

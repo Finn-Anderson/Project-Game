@@ -141,7 +141,7 @@ void APly::Use()
 
     item->PickedUp();
 
-    ItemMesh->SetSkeletalMesh(item->MeshComponent->SkeletalMesh);
+    ItemMesh->SetSkeletalMeshAsset(item->MeshComponent->SkeletalMesh);
 }
 
 void APly::Slot(int SlotNum)

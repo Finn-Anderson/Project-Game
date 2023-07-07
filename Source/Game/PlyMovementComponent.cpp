@@ -16,7 +16,7 @@ UPlyMovementComponent::UPlyMovementComponent()
 
     SprintSpeed = 600.0f;
     CrouchSpeed = 200.0f;
-    WalkSpeed = 300.0f;
+    WalkSpeed = 450.0f;
     JumpSpeed = 400.0f;
     MaxWalkSpeed = WalkSpeed;
     JumpZVelocity = JumpSpeed;
@@ -43,28 +43,22 @@ void UPlyMovementComponent::Turn(float Value)
 
         bool bKeyHeldS = Player->PController->IsInputKeyDown(EKeys::S);
 
-        FVector camLoc;
-        FRotator camRot;
+        const FRotator rotation = Player->Controller->GetControlRotation();
+        const FRotator yawRotation(0, rotation.Yaw, 0);
 
-        Player->Controller->GetPlayerViewPoint(camLoc, camRot);
-
-        const FVector direction = camRot.Vector();
-        float value = fabs(Value);
-
-        if (value > 0.75) {
-            StrafeThreshhold = true;
-        }
+        FVector direction = FRotationMatrix(yawRotation).GetScaledAxis(EAxis::X);
 
         if (bKeyHeldS) {
-            value = -value;
+            direction = -direction;
         }
 
-        if (Value < 0 && StrafeThreshhold && bKeyHeldA) {
-            Player->AddMovementInput(direction, value);
+        if (Value < 0 && bKeyHeldA) {
+            Player->AddMovementInput(direction);
         }
-        else if (Value > 0 && StrafeThreshhold && bKeyHeldD) {
-            Player->AddMovementInput(direction, value);
+        else if (Value > 0 && bKeyHeldD) {
+            Player->AddMovementInput(direction);
         }
+
     }
     else {
         StrafeThreshhold = false;
@@ -158,7 +152,7 @@ void UPlyMovementComponent::CrouchImpl(float DeltaTime, float EyeHeight, float H
 
 void UPlyMovementComponent::Sprint()
 {
-    if (!bIsCrouching && !(Player->EquipedWeapon && Player->EquipedItem->bIsADS)) {
+    if (!bIsCrouching && !(Player->EquipedItem && Player->EquipedItem->bIsADS)) {
         if (StaminaComponent->Stamina > 17) {
             MaxWalkSpeed = SprintSpeed;
 

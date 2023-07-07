@@ -49,6 +49,8 @@ void AAI::BeginPlay()
 
 	Player = Cast<APly>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
+	AIController = Cast<AAIController>(GetController());
+
 	SpawnDefaultController();
 
 	InRangeComponent->OnComponentBeginOverlap.AddDynamic(this, &AAI::OnOverlapBegin);
@@ -59,10 +61,8 @@ void AAI::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AAIController* aiController = Cast<AAIController>(GetController());
-
 	if (Player->HealthComponent->Health > 0) {
-		aiController->MoveToActor(Player, 10.0f, true);
+		AIController->MoveToActor(Player, 10.0f, true);
 	}
 }
 
